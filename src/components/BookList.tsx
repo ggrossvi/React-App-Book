@@ -1,17 +1,29 @@
+import { useState } from "react";
 
 
-function BookList() {
-    const books = [
-        'Atomic Habits',
-        'The Henna Artist',
-        'I,Robot'
-    ]
+interface Props {
+    books: string[];
+    heading: string;
+}
 
+function BookList({books,heading}: Props) {
+
+    // Hooks add state management
+    const [selectedIndex, setSelectedIndex] = useState(-1);
+  
     return (
         <>
-            <h1> Book List</h1>
+            <h1> {heading}</h1>
+            {books.length ===0 && <p>No item found</p>}
             <ul className="list-group">
-                {books.map(book => <li>{book}</li>)}    
+                {books.map((book, index) => (
+                <li 
+                className= {selectedIndex === index ? 'list-group-item active':' list-group-item' } //if it equals the index of the current item it should be highlighted.  
+                key={book} 
+                onClick={() => { setSelectedIndex (index); }}
+                >
+                    {book}
+                </li>))}    
             </ul>
         </>
     )
